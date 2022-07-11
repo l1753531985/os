@@ -108,7 +108,7 @@ SECTION MBR vstart=0x7c00
 	mov bx,LOADER_BASE_ADDR
 	mov cx,4 ;注意在loader大小变化时要进行修改
 	call rd_disk_m_16
-	jmp LOADER_BASE_ADDR 
+	jmp LOADER_BASE_ADDR + 0x02A
 
 ;--------------------------------------------------
 ; 功能：读取硬盘n个扇区
