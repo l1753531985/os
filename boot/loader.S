@@ -147,5 +147,21 @@ p_mode_start:
 	mov gs,ax
 
 	mov byte [gs:160],'P'
+
 	jmp $
+;------------------- 创建页目录及页表-------------------------------
+setup_page:
+	mov ecx,4096
+	mov esi,0
+.clear_page_dir:
+	mov byte [PAGE_DIR_TABLE_POS + esi],0 
+	inc esi
+	loop .clear_page_dir
+
+.create_pde: ;创建 page directory entry(PDE)
+	mov eax,PAGE_DIR_TABLE_POS
+	add eax,0x1000 ;每个页目录项大小为4byte，PDE共含有1024项
+	mov ebx,eax
+
+	or eax,PG_US_U | PG_RW_W | PG_P
 
