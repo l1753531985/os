@@ -148,11 +148,13 @@ p_mode_start:
 
 	mov byte [gs:160],'P'
 
-;创建页目录及页表并初始化页内存位图
+;memory for page
 	call setup_page
 	sgdt [gdt_ptr]
 	mov ebx,[gdt_ptr + 2]
 	or dword [ebx + 0x18 + 4], 0xc0000000
+	
+	add dword [gdt_ptr + 2],0xc0000000
 	
 	add esp,0xc0000000
 
@@ -181,7 +183,7 @@ setup_page:
 ;创建 page directory entry(PDE)
 .create_pde: 
 	mov eax,PAGE_DIR_TABLE_POS
-	add eax,0x1000 ;每个页目录项大小为4byte，PDE共含有1024项
+	add eax,0x1000 ;每个页目录项大小为4byte，PDE共含有2^10项
 	mov ebx,eax
 
 	or eax,PG_US_U | PG_RW_W | PG_P
