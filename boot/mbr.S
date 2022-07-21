@@ -8,7 +8,7 @@ SECTION MBR vstart=0x7c00
 	mov ss,ax
 	mov fs,ax
 	mov sp,0x7c00
-        mov ax,0xb800
+    mov ax,0xb800
 	mov gs,ax
 
 ;清屏

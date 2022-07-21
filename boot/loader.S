@@ -148,7 +148,12 @@ p_mode_start:
 
 	mov byte [gs:160],'P'
 
-;memory for page
+;------------------- 加载kernel-------------------------------
+	mov eax,KERNEL_START_SECTOR
+	mov ebx,KERNEL_BIN_BASE_ADDR
+	mov ecx,200
+	call rd_disk_m_32
+;------------------- 内存分页 -------------------------------
 	call setup_page
 	sgdt [gdt_ptr]
 	mov ebx,[gdt_ptr + 2]
