@@ -176,6 +176,35 @@ p_mode_start:
 
 	jmp $
 
+;-------------------保护模式下将kernel从磁盘拷贝到内存-------------------------------
+;由于hd60M.img属于ata0,因此使用primary端口进行磁盘读写
+rd_disk_m_32:
+	mov esi,eax
+	mov edi,ecx
+
+	mov dx,0x1f2
+	mov al,cl ;由于200=0xc8，因此8位寄存器即可
+	out dx,al
+	mov eax,esi
+
+;24位lba寄存器存入0x000009,即开始读入扇区索引
+	mov dx,0x1f3
+	out dx,al
+
+	mov cl,8
+	shr eax,cl
+	mov dx,0x1f4
+	out dx,al
+
+	shr eax,cl
+	mov dx,0x1f5
+	out dx,al
+
+	shr eax,cl
+	and al,0x0f
+	or al,0xe0
+
+
 ;------------------- 创建页目录及页表-------------------------------
 setup_page:
 	mov ecx,4096

@@ -1,6 +1,8 @@
 ;-------------------- loader and kernel --------------------
 LOADER_BASE_ADDR equ 0x900
 LOADER_START_SECTOR equ 0x2
+KERNEL_START_SECTOR equ 0x9
+KERNEL_BIN_BASE_ADDR equ 0x70000
 
 ;-------------------- gdt 描述符属性 --------------------
 DESC_G_4K 		equ 1_00000000000000000000000b
